@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lane Cross — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Public+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --paper: #F3F5F8;
+    --grid: #DCE3EC;
+    --ink: #16233D;
+    --ink-soft: #55627A;
+    --line: #C7D0DE;
+    --teal: #1F8A70;
+    --amber: #D98430;
+    --card: #FFFFFF;
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Public Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --font-mono: 'IBM Plex Mono', 'SF Mono', Consolas, monospace;
+    box-sizing: border-box;
+    padding-top: env(safe-area-inset-top, 0px);
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --paper: #0F1620; --grid: #1B2430; --ink: #E7ECF3; --ink-soft: #9AA6BA;
+      --line: #2A3648; --teal: #3FBF9B; --amber: #E8A33D; --card: #141C29;
+    }
+  }
+  :root[data-theme="dark"] {
+    --paper: #0F1620; --grid: #1B2430; --ink: #E7ECF3; --ink-soft: #9AA6BA;
+    --line: #2A3648; --teal: #3FBF9B; --amber: #E8A33D; --card: #141C29;
+  }
+
+  html { scroll-behavior: smooth; scroll-padding-top: calc(70px + env(safe-area-inset-top,0px)); }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0; background: var(--paper); color: var(--ink); font-family: var(--font-body);
+    line-height: 1.55;
+    background-image: radial-gradient(circle, var(--grid) 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .wrap { max-width: 780px; margin: 0 auto; padding: 0 28px; }
+  a { color: inherit; }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--teal); outline-offset: 3px; }
+
+  header {
+    position: sticky; top: 0; top: env(safe-area-inset-top,0px); z-index: 20;
+    background: color-mix(in srgb, var(--paper) 90%, transparent);
+    backdrop-filter: blur(8px); border-bottom: 1px solid var(--line);
+  }
+  .header-inner { display:flex; align-items:center; justify-content:space-between; max-width:780px; margin:0 auto; padding:16px 28px; gap:16px; }
+  .brand { display:flex; align-items:center; gap:9px; font-family: var(--font-display); font-weight:600; font-size:1rem; }
+  .node-dot { width:9px; height:9px; border-radius:50%; background: var(--teal); flex-shrink:0; }
+  nav { display:flex; align-items:center; gap:20px; flex-wrap:wrap; }
+  nav a { font-size:0.88rem; text-decoration:none; color:var(--ink-soft); border-bottom:1px solid transparent; padding-bottom:2px; transition:color .15s,border-color .15s; }
+  nav a:hover { color:var(--ink); border-color: var(--teal); }
+  .theme-toggle { font-family: var(--font-body); font-size:.78rem; background:none; border:1px solid var(--line); border-radius:4px; color:var(--ink-soft); padding:5px 9px; cursor:pointer; }
+  .theme-toggle:hover { color: var(--ink); border-color: var(--ink-soft); }
+
+  .hero { padding: 68px 0 60px; }
+  .status-line { display:flex; align-items:center; gap:8px; font-size:.82rem; color: var(--ink-soft); margin-bottom: 20px; }
+  .status-dot { width:8px; height:8px; border-radius:50%; background: var(--teal); box-shadow:0 0 0 0 color-mix(in srgb, var(--teal) 50%, transparent); animation: pulse 2.4s ease-out infinite; }
+  @keyframes pulse { 0%{box-shadow:0 0 0 0 color-mix(in srgb, var(--teal) 45%, transparent);} 70%{box-shadow:0 0 0 8px transparent;} 100%{box-shadow:0 0 0 0 transparent;} }
+  @media (prefers-reduced-motion: reduce) { .status-dot { animation:none; } }
+  h1.headline { font-family: var(--font-display); font-weight:700; font-size: clamp(2.4rem,6vw,3.6rem); line-height:1.05; margin:0 0 16px; }
+  .tagline { font-size:1.05rem; color: var(--ink-soft); max-width: 50ch; margin:0; }
+
+  .spine { border-left: 2px solid var(--line); margin-left: 6px; }
+  .spine-item { position: relative; padding: 0 0 70px 32px; }
+  .spine-item:last-of-type { padding-bottom: 12px; }
+  .spine-item::before {
+    content:''; position:absolute; left:-8px; top:6px; width:13px; height:13px; border-radius:50%;
+    background: var(--paper); border:2px solid var(--teal);
+  }
+  .spine-head { display:flex; align-items:baseline; gap:10px; margin-bottom:26px; }
+  .spine-num { font-family: var(--font-mono); font-size:.8rem; color: var(--ink-soft); }
+  .spine-title { font-family: var(--font-display); font-weight:600; font-size:1.15rem; }
+
+  .tick-panel { position: relative; background: var(--card); border:1px solid var(--line); border-radius:6px; padding: 24px 26px; }
+  .tick-panel::before, .tick-panel::after { content:''; position:absolute; width:14px; height:14px; pointer-events:none; }
+  .tick-panel::before { top:-1px; left:-1px; border-top:2px solid var(--amber); border-left:2px solid var(--amber); }
+  .tick-panel::after { bottom:-1px; right:-1px; border-bottom:2px solid var(--amber); border-right:2px solid var(--amber); }
+
+  .about-text { margin: 0 0 14px; max-width: 60ch; }
+  .about-text:last-child { margin-bottom: 0; }
+
+  .host-table { display:flex; flex-direction:column; gap:14px; }
+  .host-row { background: var(--card); border:1px solid var(--line); border-radius:6px; padding:20px 22px; }
+  .host-top { display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:10px; margin-bottom:10px; }
+  .host-name { font-family: var(--font-display); font-weight:600; font-size:1.02rem; }
+  .host-meta { display:flex; align-items:center; gap:10px; }
+  .host-addr { font-family: var(--font-mono); font-size:.78rem; color: var(--ink-soft); }
+  .host-status { display:flex; align-items:center; gap:6px; font-size:.78rem; color: var(--teal); }
+  .host-status .dot { width:7px; height:7px; border-radius:50%; background: var(--teal); }
+  .host-desc { font-size:.94rem; color: var(--ink-soft); margin: 0 0 14px; }
+  .host-tags { display:flex; flex-wrap:wrap; gap:6px; }
+  .host-tags span { font-size:.72rem; font-family: var(--font-mono); color: var(--ink-soft); border:1px solid var(--line); border-radius:3px; padding:2px 7px; }
+
+  .skill-grid { display:grid; grid-template-columns: repeat(auto-fit,minmax(190px,1fr)); gap:14px; }
+  .skill-panel-title { font-family: var(--font-display); font-weight:600; font-size:.92rem; margin:0 0 12px; color: var(--amber); }
+  .skill-panel ul { list-style:none; margin:0; padding:0; }
+  .skill-panel li { font-size:.88rem; padding: 4px 0; }
+  .skill-panel li::before { content: '— '; color: var(--ink-soft); }
+
+  .contact-text { font-size:1rem; max-width:52ch; margin:0 0 22px; color: var(--ink-soft); }
+  .contact-row { display:flex; flex-wrap:wrap; gap:12px; }
+  .contact-chip { position:relative; display:inline-flex; align-items:center; gap:8px; font-family: var(--font-mono); font-size:.83rem; text-decoration:none; color: var(--ink); background: var(--card); border:1px solid var(--line); border-radius:5px; padding:10px 16px; transition:border-color .15s; }
+  .contact-chip:hover { border-color: var(--teal); }
+
+  footer { border-top:1px solid var(--line); padding: 22px 0 calc(22px + env(safe-area-inset-bottom,0px)); }
+  .footer-inner { max-width:780px; margin:0 auto; padding:0 28px; display:flex; justify-content:space-between; flex-wrap:wrap; gap:8px; font-family: var(--font-mono); font-size:.76rem; color: var(--ink-soft); }
+
+  @media (max-width: 600px) {
+    .header-inner { padding:14px 20px; } nav { gap:12px; }
+    .wrap, .footer-inner { padding:0 20px; }
+    .spine-item { padding-left: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand"><span class="node-dot"></span> Lane Cross</div>
+    <nav>
+      <a href="#about">about</a>
+      <a href="#projects">projects</a>
+      <a href="#skills">skills</a>
+      <a href="#contact">contact</a>
+      <button class="theme-toggle" id="themeToggle" type="button" aria-label="Toggle color theme">mode</button>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero">
+    <div class="status-line"><span class="status-dot"></span> online — accepting new connections</div>
+    <h1 class="headline">Lane Cross</h1>
+    <p class="tagline">Datacenter administrator at Garmin, building toward networking and cybersecurity — one home lab experiment at a time.</p>
+  </section>
+
+  <div class="spine">
+
+    <section class="spine-item" id="about">
+      <div class="spine-head"><span class="spine-num">01</span><span class="spine-title">about</span></div>
+      <div class="tick-panel">
+        <p class="about-text">I work as a datacenter administrator at Garmin, managing enterprise infrastructure day to day — uptime, systems, and the environments that keep things running. That work is what's pulled me toward networking and cybersecurity specifically.</p>
+        <p class="about-text">I keep a home lab to take that interest further outside of work: testing configurations, hosting my own services, and treating it as a low-stakes place to break and rebuild things I'd never touch in production.</p>
+      </div>
+    </section>
+
+    <section class="spine-item" id="projects">
+      <div class="spine-head"><span class="spine-num">02</span><span class="spine-title">projects</span></div>
+      <div class="host-table">
+
+        <div class="host-row">
+          <div class="host-top">
+            <span class="host-name">home-lab-01</span>
+            <div class="host-meta">
+              <span class="host-addr">192.168.1.10</span>
+              <span class="host-status"><span class="dot"></span>active</span>
+            </div>
+          </div>
+          <p class="host-desc">A self-managed lab environment for testing networking and systems administration concepts — a smaller-scale mirror of the infrastructure work I do at Garmin.</p>
+          <div class="host-tags"><span>networking</span><span>virtualization</span><span>linux</span></div>
+        </div>
+
+        <div class="host-row">
+          <div class="host-top">
+            <span class="host-name">media-server</span>
+            <div class="host-meta">
+              <span class="host-addr">192.168.1.20</span>
+              <span class="host-status"><span class="dot"></span>active</span>
+            </div>
+          </div>
+          <p class="host-desc">Self-hosted media setup on the home lab — storage management, remote access, and the ongoing admin work to keep it running reliably.</p>
+          <div class="host-tags"><span>self-hosted</span><span>storage</span><span>networking</span></div>
+        </div>
+
+        <div class="host-row">
+          <div class="host-top">
+            <span class="host-name">game-servers</span>
+            <div class="host-meta">
+              <span class="host-addr">192.168.1.30</span>
+              <span class="host-status"><span class="dot"></span>active</span>
+            </div>
+          </div>
+          <p class="host-desc">Dedicated game servers for friends and community play — managing uptime, user access, and the network configuration behind them.</p>
+          <div class="host-tags"><span>server admin</span><span>networking</span></div>
+        </div>
+
+      </div>
+    </section>
+
+    <section class="spine-item" id="skills">
+      <div class="spine-head"><span class="spine-num">03</span><span class="spine-title">skills</span></div>
+      <div class="skill-grid">
+        <div class="tick-panel skill-panel">
+          <p class="skill-panel-title">infrastructure</p>
+          <ul><li>Windows Server</li><li>Linux</li><li>Virtualization</li></ul>
+        </div>
+        <div class="tick-panel skill-panel">
+          <p class="skill-panel-title">networking &amp; security</p>
+          <ul><li>Network fundamentals</li><li>Firewalls &amp; segmentation</li><li>Home lab hardening</li></ul>
+        </div>
+        <div class="tick-panel skill-panel">
+          <p class="skill-panel-title">currently learning</p>
+          <ul><li>Security fundamentals</li><li>Network architecture</li></ul>
+        </div>
+      </div>
+    </section>
+
+    <section class="spine-item" id="contact">
+      <div class="spine-head"><span class="spine-num">04</span><span class="spine-title">contact</span></div>
+      <p class="contact-text">Want to talk infrastructure, networking, or the home lab? Reach out — I check email regularly.</p>
+      <div class="contact-row">
+        <a class="contact-chip" href="mailto:lane@email.com">lane@email.com</a>
+        <a class="contact-chip" href="https://github.com/lanecross" target="_blank" rel="noopener">github.com/lanecross</a>
+        <a class="contact-chip" href="https://linkedin.com/in/lanecross" target="_blank" rel="noopener">linkedin.com/in/lanecross</a>
+      </div>
+    </section>
+
+  </div>
+</main>
+
+<footer>
+  <div class="footer-inner">
+    <span>&copy; 2026 Lane Cross</span>
+    <span>network last updated 2026</span>
+  </div>
+</footer>
+
+<script>
+  (function(){
+    var root = document.documentElement;
+    var btn = document.getElementById('themeToggle');
+    var stored = null;
+    try { stored = localStorage.getItem('portfolio-theme-bp'); } catch(e){}
+    if (stored === 'light' || stored === 'dark') root.setAttribute('data-theme', stored);
+    btn.addEventListener('click', function(){
+      var current = root.getAttribute('data-theme');
+      var prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+      var effectiveDark = current ? current === 'dark' : prefersDark;
+      var next = effectiveDark ? 'light' : 'dark';
+      root.setAttribute('data-theme', next);
+      try { localStorage.setItem('portfolio-theme-bp', next); } catch(e){}
+    });
+  })();
+</script>
+
+</body>
+</html>
